@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <FxCompile Include="VRMUnlitTexturePS.hlsl" />
+    <FxCompile Include="VRMUnlitTextureVS.hlsl" />
+    <FxCompile Include="pbrPS.hlsl" />
+    <FxCompile Include="pbrVS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\VRMUnlitTextureHS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\VRMUnlitTextureDS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\VRMUnlitTextureGS.hlsl" />
+    <FxCompile Include="StandardSkinningCS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\StandardVS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\StandardHS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\StandardDS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\StandardGS.hlsl" />
+    <FxCompile Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\StandardPS.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GlobalParameters.hlsli" />
+    <None Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\Skinning.hlsli" />
+    <None Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\VRMUnlitTexture.hlsli" />
+    <None Include="Common.hlsli" />
+    <None Include="..\..\..\%40glTF\D3DVRM\D3DVRMShaders\Standard.hlsli" />
+  </ItemGroup>
+</Project>

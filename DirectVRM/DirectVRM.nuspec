@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>DirectVRM</id>
+    <version>1.0.0-alpha01</version>
+    <authors>FROM/Kenji Yamazaki</authors>
+    <owners>FROM</owners>
+    <license type="expression">MIT</license>
+    <!--
+    <projectUrl></projectUrl>
+    <iconUrl></iconUrl>
+    -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+VRM drawing library for .NET.
+This package supports .NET Framework 4.7.1+ and the x64 architecture only.
+    </description>
+    <copyright>Copyright 2019 FROM/Kenji Yamazaki</copyright>
+    <tags>VRM Direct3D glTF</tags>
+    <language>ja-JP</language>
+    <releaseNotes>
+初版。
+    </releaseNotes>
+  </metadata>
+  <files>
+    <file src="bin\x64\Release\DirectVRM.pdb" target="lib/net471"/>
+  </files>
+</package>
