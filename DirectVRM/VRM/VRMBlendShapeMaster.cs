@@ -17,6 +17,15 @@ namespace DirectVRM
         public string CurrentGroupName { get; set; } = "neutral";
 
         /// <summary>
+        ///     現在のブレンド割合（0.0～1.0）。
+        /// </summary>
+        public float CurrentValue
+        {
+            get => this._CurrentValue;
+            set => this._CurrentValue = ( 0.0f <= value || value <= 1.0f ) ? value : throw new ArgumentOutOfRangeException();
+        }
+
+        /// <summary>
         ///     すべてのブレンドシェイプグループのリスト。
         ///     key: プリセット名（すべて大文字）
         /// </summary>
@@ -72,11 +81,17 @@ namespace DirectVRM
         {
             if( this.BlendShapeGroups.TryGetValue( this.CurrentGroupName, out var presetGroup ) )
             {
+                float blendValue = this._CurrentValue;
+
+                // IsBinary が true の場合は、0.0 または 1.0 のいずれかしか値をとらない。
+                if( presetGroup.IsBinary )
+                    blendValue = (float) Math.Round( blendValue );
+
                 // (1) プリセットのすべてのモーフターゲットを設定する。
                 foreach( var bind in presetGroup.Binds )
                 {
                     if( bind.Index.HasValue )
-                        bind.Mesh.Weights[ bind.Index.Value ] = bind.Weight / 100.0f;   // VRMのweightは0～100なので、glTFのweightの0～1に直す
+                        bind.Mesh.Weights[ bind.Index.Value ] = bind.Weight * blendValue / 100.0f;   // VRMのweightは0～100なので、glTFのweightの0～1に直す
                 }
 
                 // (2) プリセットのすべてのマテリアルを設定する。
@@ -95,5 +110,7 @@ namespace DirectVRM
 
 
         private glTF_VRM_BlendShapeMaster _Native;
+
+        private float _CurrentValue = 1.0f;
     }
 }
