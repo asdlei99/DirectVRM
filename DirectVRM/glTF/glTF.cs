@@ -343,7 +343,7 @@ namespace DirectVRM
             #endregion
         }
 
-        public void LateBinding( byte[] binaryBuffer, SharpDX.Direct3D11.Device d3dDevice )
+        internal void LateBinding( byte[] binaryBuffer, SharpDX.Direct3D11.Device d3dDevice )
         {
             // Asset
             this.Asset?.LateBinding( this );

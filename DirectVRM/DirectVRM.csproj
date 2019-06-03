@@ -72,6 +72,11 @@
     <Compile Include="glTF\glTFAnimationChannel.cs" />
     <Compile Include="glTF\glTFAnimationChannelTarget.cs" />
     <Compile Include="glTF\glTFAnimationSampler.cs" />
+    <Compile Include="Model.cs" />
+    <Compile Include="VRM\VRMMesh.cs" />
+    <Compile Include="VRM\VRMMeshPrimitive.cs" />
+    <Compile Include="VRM\VRMNode.cs" />
+    <Compile Include="VRM\VRMScene.cs" />
     <Compile Include="VRM\VRMSecondaryAnimation.cs" />
     <Compile Include="VRM\VRMBlendShapeBind.cs" />
     <Compile Include="VRM\VRMBlendShapeGroup.cs" />
@@ -156,7 +161,7 @@
     <Compile Include="glTF\glTFTexture.cs" />
     <Compile Include="JsonHelper\ArrayConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VRM\VRMScene.cs" />
+    <Compile Include="VRM\VRM.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glTF\Native\README.txt" />

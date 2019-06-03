@@ -45,14 +45,14 @@ namespace Sample
             // VRMシーン（モデル）を生成する。
 
             string exePath = Path.GetDirectoryName( Application.ExecutablePath );
-            this._VRMScene = new DirectVRM.VRMScene( this._D3DDevice, Path.Combine( exePath, @"AliciaVRM\AliciaSolid.vrm" ) );
+            this._Model = new DirectVRM.Model( this._D3DDevice, Path.Combine( exePath, @"AliciaVRM\AliciaSolid.vrm" ) );
 
             // 初期状態では +Z 方向を向いているので、Y軸に対して180度反転しておく。
-            this._VRMScene.RotationLH = Quaternion.RotationAxis( Vector3.Up, MathUtil.Pi );
+            this._Model.VRM.RotationLH = Quaternion.RotationAxis( Vector3.Up, MathUtil.Pi );
 
             // ブレンドシェイプを指定する。指定しなければ "neutral"。
-            if( null != this._VRMScene.BlendShapeMaster )
-                this._VRMScene.BlendShapeMaster.CurrentGroupName = "fun";
+            if( null != this._Model.VRM?.BlendShapeMaster )
+                this._Model.VRM.BlendShapeMaster.CurrentGroupName = "fun";
 
 
             // メインループ
@@ -64,7 +64,7 @@ namespace Sample
                 double NowSec = timer.ElapsedMilliseconds / 1000.0; // seconds
 
                 // VRMシーンを更新する。
-                this._VRMScene.Update( NowSec );
+                this._Model.Update( NowSec );
 
                 // VRMシーンを描画する。
                 this._D3DDevice.ImmediateContext.Rasterizer.SetViewport( this._DefaultViewport );
@@ -73,7 +73,7 @@ namespace Sample
                 this._D3DDevice.ImmediateContext.ClearRenderTargetView( this._DefaultRenderTargetView, new Color4( 0.2f, 0.4f, 0.8f, 1.0f ) );
                 this._D3DDevice.ImmediateContext.ClearDepthStencilView( this._DefaultDepthStencilView, SharpDX.Direct3D11.DepthStencilClearFlags.Depth | SharpDX.Direct3D11.DepthStencilClearFlags.Stencil, 1.0f, 0 );
                 this._D3DDevice.ImmediateContext.OutputMerger.SetTargets( this._DefaultDepthStencilView, this._DefaultRenderTargetView );
-                this._VRMScene.Draw( this._D3DDevice.ImmediateContext, ref _ShaderParameters );
+                this._Model.Draw( this._D3DDevice.ImmediateContext, ref _ShaderParameters );
 
                 // スワップチェーンを表示する。
                 this._SwapChain.Present( 1, SharpDX.DXGI.PresentFlags.None );
@@ -83,7 +83,7 @@ namespace Sample
 
             // アプリを終了する。
 
-            this._VRMScene?.Dispose();
+            this._Model?.Dispose();
             this._ReleaseVRM();
             this._ReleaseDirect3D();
         }
@@ -94,7 +94,7 @@ namespace Sample
 
 
         private DirectVRM.ShaderParameters _ShaderParameters;
-        private DirectVRM.VRMScene _VRMScene;
+        private DirectVRM.Model _Model;
 
 
         private void _InitializeVRM()

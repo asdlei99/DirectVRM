@@ -223,15 +223,6 @@ namespace DirectVRM
 
 
         /// <summary>
-        ///     自分と子ノードを更新する。
-        /// </summary>
-        public void Update()
-        {
-            // Transform 関連のプロパティは それぞれ set 時にリアルタイムで更新されるため
-            // ここでは何もすることがない。
-        }
-
-        /// <summary>
         ///     自分と子ノードを描画する。
         /// </summary>
         public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, VRMMaterialProperty[] vrmMaterials )
