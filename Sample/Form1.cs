@@ -112,15 +112,9 @@ namespace Sample
             //----------------
             this._ShaderParameters = new DirectVRM.ShaderParameters();
             this._ShaderParameters.TessellationFactor = 5f;
-
             this._ShaderParameters.WorldMatrix = Matrix.Identity;
-            this._ShaderParameters.WorldMatrix.Transpose(); // HLSLは列優先
-
             this._ShaderParameters.ViewMatrix = Matrix.LookAtLH( cameraPosition, cameraForward, cameraUp );
-            this._ShaderParameters.ViewMatrix.Transpose();  // HLSLは列優先
-
             this._ShaderParameters.ProjectionMatrix = Matrix.PerspectiveFovLH( MathUtil.Pi * fov / 180.0f, aspect, nearZ, farZ );
-            this._ShaderParameters.ProjectionMatrix.Transpose();    // HLSLは列優先
             //----------------
             #endregion
 
