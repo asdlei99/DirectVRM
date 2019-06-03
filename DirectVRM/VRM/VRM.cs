@@ -23,21 +23,6 @@ namespace DirectVRM
 
         public VRMScene Scene { get; protected set; }
 
-        /// <summary>
-        ///     シーンの平行移動。
-        /// </summary>
-        public Vector3 PositionLH { get; set; } = Vector3.Zero;
-
-        /// <summary>
-        ///     シーンの回転。
-        /// </summary>
-        public Quaternion RotationLH { get; set; } = Quaternion.Identity;
-
-        /// <summary>
-        ///     シーンの拡大率。
-        /// </summary>
-        public Vector3 Scale { get; set; } = Vector3.One;
-
 
 
         // 生成と終了
@@ -202,9 +187,6 @@ namespace DirectVRM
 
             // 現在のブレンドシェイプを適用する。
             this.BlendShapeMaster?.Apply();
-
-            // シーンの現在の変形をシェーダーパラメーターに設定する。
-            shaderParameters.WorldMatrix = Matrix.Transformation( Vector3.Zero, Quaternion.Identity, this.Scale, Vector3.Zero, this.RotationLH, this.PositionLH );
 
             // シーンを描画する。
             this.Scene.Draw( d3ddc, ref shaderParameters, this.MaterialProperties );

@@ -48,7 +48,7 @@ namespace Sample
             this._Model = new DirectVRM.Model( this._D3DDevice, Path.Combine( exePath, @"AliciaVRM\AliciaSolid.vrm" ) );
 
             // 初期状態では +Z 方向を向いているので、Y軸に対して180度反転しておく。
-            this._Model.VRM.RotationLH = Quaternion.RotationAxis( Vector3.Up, MathUtil.Pi );
+            this._Model.RotationLH = Quaternion.RotationAxis( Vector3.Up, MathUtil.Pi );
 
             // ブレンドシェイプを指定する。指定しなければ "neutral"。
             if( null != this._Model.VRM?.BlendShapeMaster )

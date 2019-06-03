@@ -466,6 +466,22 @@ namespace DirectVRM
 
 
 
+        // 進行と描画
+
+
+        public void Update( double 現在時刻sec )
+        {
+            var scene = this.Scene ?? this.Scenes[ 0 ];
+
+            scene.Update( 現在時刻sec );
+        }
+
+        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters )
+        {
+            this.Scene?.Draw( d3ddc, ref shaderParameters );
+        }
+
+
         // ローカル
 
 

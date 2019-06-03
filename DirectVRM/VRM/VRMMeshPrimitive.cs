@@ -299,7 +299,7 @@ namespace DirectVRM
 
             // トポロジ
 
-            if( _TopoMap.TryGetValue( this._glTFMeshPrimitive.Mode, out var d3dTopology ) )
+            if( glTFMeshPrimitive.TopologyMap.TryGetValue( this._glTFMeshPrimitive.Mode, out var d3dTopology ) )
             {
                 d3ddc.InputAssembler.PrimitiveTopology = d3dTopology;
             }
@@ -377,17 +377,6 @@ namespace DirectVRM
 
         private glTFMeshPrimitive _glTFMeshPrimitive;
 
-        // トポロジの変換表 GL to D3D11
-        private static readonly Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> _TopoMap = new Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> {
-            { glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS,          SharpDX.Direct3D.PrimitiveTopology.PointList },
-            { glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES,           SharpDX.Direct3D.PrimitiveTopology.LineList },
-            //{ glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP,      SharpDX.Direct3D.PrimitiveTopology.LineList },     // Direct3D11 には LINE_LOOP は存在しない。
-            { glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_STRIP,      SharpDX.Direct3D.PrimitiveTopology.LineStrip },
-            { glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLES,       SharpDX.Direct3D.PrimitiveTopology.PatchListWith3ControlPoints }, // TRIANGLES のときは HS, DS, GS を有効にするため PatchList を使う。
-            //{ glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLES,       SharpDX.Direct3D.PrimitiveTopology.TriangleList },              // HS, DS, GS を使わないならこっち。
-            //{ glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_FAN,   SharpDX.Direct3D.PrimitiveTopology.TriangleList },
-            { glTFLoader.Schema.MeshPrimitive.ModeEnum.TRIANGLE_STRIP,  SharpDX.Direct3D.PrimitiveTopology.TriangleStrip },
-        };
 
         private void _既定のマテリアルを設定する( SharpDX.Direct3D11.DeviceContext d3ddc )
         {

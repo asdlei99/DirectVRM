@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using SharpDX;
 
 namespace DirectVRM
 {
@@ -11,6 +12,21 @@ namespace DirectVRM
         public glTF glTF { get; protected set; }
 
         public VRM VRM { get; protected set; }
+
+        /// <summary>
+        ///     シーンの平行移動。
+        /// </summary>
+        public Vector3 PositionLH { get; set; } = Vector3.Zero;
+        
+        /// <summary>
+        ///     シーンの回転。
+        /// </summary>
+        public Quaternion RotationLH { get; set; } = Quaternion.Identity;
+
+        /// <summary>
+        ///     シーンの拡大率。
+        /// </summary>
+        public Vector3 Scale { get; set; } = Vector3.One;
 
 
 
@@ -64,17 +80,28 @@ namespace DirectVRM
         public void Update( double 現在時刻sec )
         {
             if( null != this.VRM )
+            {
                 this.VRM.Update( 現在時刻sec );
-            //else
-            //    this.glTF.Update( 現在時刻sec );
+            }
+            else
+            {
+                this.glTF.Update( 現在時刻sec );
+            }
         }
 
         public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters )
         {
+            // シーンの現在の変形をシェーダーパラメーターに設定する。
+            shaderParameters.WorldMatrix = Matrix.Transformation( Vector3.Zero, Quaternion.Identity, this.Scale, Vector3.Zero, this.RotationLH, this.PositionLH );
+
             if( null != this.VRM )
+            {
                 this.VRM.Draw( d3ddc, ref shaderParameters );
-            //else
-            //    this.glTF.Draw( d3ddc, ref shaderParameters );
+            }
+            else
+            {
+                this.glTF.Draw( d3ddc, ref shaderParameters );
+            }
         }
     }
 }

@@ -369,7 +369,7 @@ namespace DirectVRM
         // 進行と描画
 
 
-        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, glTFSkin skin, float[] weights, Dictionary<string, glTFAccessor>[] targets, VRMMaterialProperty[] vrmMaterials )
+        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, glTFSkin skin, float[] weights, Dictionary<string, glTFAccessor>[] targets )
         {
             if( 0 == this.VertexNum ||
                 !this.D3DSkinningBufferMap.TryGetValue( "POSITION", out var positionBuffer ) ||
@@ -642,7 +642,7 @@ namespace DirectVRM
 
             // トポロジ
 
-            if( _TopoMap.TryGetValue( this.Mode, out var d3dTopology ) )
+            if( TopologyMap.TryGetValue( this.Mode, out var d3dTopology ) )
             {
                 d3ddc.InputAssembler.PrimitiveTopology = d3dTopology;
             }
@@ -660,35 +660,22 @@ namespace DirectVRM
             {
                 int materialIndex = this.MaterialIndex.Value;
 
-                if( 0 <= materialIndex && materialIndex < vrmMaterials.Length )
+                if( null != this.Material )
                 {
-                    // (A) VRMマテリアルを使う場合
-
-                    var vrmMaterial = vrmMaterials[ materialIndex ];
-                    bool useTesselator = ( d3dTopology == SharpDX.Direct3D.PrimitiveTopology.PatchListWith3ControlPoints );
-
-                    if( !this._VRMマテリアルを設定する( d3ddc, vrmMaterial, vrmMaterial.Shader, useTesselator ) )
-                    {
-                        // 失敗したら Standard マテリアルを使う。
-                        this._VRMマテリアルを設定する( d3ddc, vrmMaterial, "Standard", useTesselator );
-                    }
-                }
-                else if( null != this.Material )
-                {
-                    // (B) glTFマテリアルを使う場合
+                    // (A) glTFマテリアルを使う場合
 
                     this._glTFマテリアルを設定する( d3ddc, this.Material );
                 }
                 else
                 {
-                    // (C) マテリアルの指定が無効である場合
+                    // (B) マテリアルの指定が無効である場合
 
                     this._既定のマテリアルを設定する( d3ddc );
                 }
             }
             else
             {
-                // (D) マテリアルの指定がない場合
+                // (C) マテリアルの指定がない場合
 
                 this._既定のマテリアルを設定する( d3ddc );
             }
@@ -825,7 +812,7 @@ namespace DirectVRM
         private glTFLoader.Schema.MeshPrimitive _Native;
 
         // トポロジの変換表 GL to D3D11
-        private static readonly Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> _TopoMap = new Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> {
+        internal static readonly Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> TopologyMap = new Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> {
             { glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS,          SharpDX.Direct3D.PrimitiveTopology.PointList },
             { glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES,           SharpDX.Direct3D.PrimitiveTopology.LineList },
             //{ glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP,      SharpDX.Direct3D.PrimitiveTopology.LineList },     // Direct3D11 には LINE_LOOP は存在しない。

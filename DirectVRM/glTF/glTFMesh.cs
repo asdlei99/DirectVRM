@@ -131,11 +131,11 @@ namespace DirectVRM
                 this.Weights[ i ] = this._OriginalWeights[ i ];
         }
 
-        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, glTFSkin skin, VRMMaterialProperty[] vrmMaterials )
+        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, glTFSkin skin )
         {
             // すべてのプリミティブを描画する。
             foreach( var primitive in this.Primitives )
-                primitive.Draw( d3ddc, ref shaderParameters, skin, this.Weights, this.Targets, vrmMaterials );
+                primitive.Draw( d3ddc, ref shaderParameters, skin, this.Weights, this.Targets );
         }
 
 
