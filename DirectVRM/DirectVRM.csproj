@@ -103,6 +103,7 @@
     <EmbeddedResource Include="D3D\cso\StandardVS.cso" />
     <Compile Include="VRM\VRMSecondaryAnimationSpring.SphereCollider.cs" />
     <None Include="app.config" />
+    <None Include="DirectVRM.nuspec" />
     <None Include="追加仕様.md" />
     <Compile Include="D3D\D3DShaders.cs" />
     <Compile Include="D3D\ShaderParameters.cs" />
