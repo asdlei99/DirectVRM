@@ -206,7 +206,8 @@ namespace DirectVRM
 
         public static void UpdateGrobalParametersBuffer( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters )
         {
-            d3ddc.UpdateSubresource( ref shaderParameters, D3DShaderParametersBuffer );
+            var forHLSL = shaderParameters.GetParametersForHLSL();
+            d3ddc.UpdateSubresource( ref forHLSL, D3DShaderParametersBuffer );
 
             // 各シェーダーステージの 定数バッファ b0 へ登録
 

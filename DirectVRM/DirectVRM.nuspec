@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DirectVRM</id>
-    <version>1.0.0-alpha01</version>
+    <version>1.0.0-alpha02</version>
     <authors>FROM/Kenji Yamazaki</authors>
     <owners>FROM</owners>
     <license type="expression">MIT</license>
@@ -19,7 +19,8 @@ This package supports .NET Framework 4.7.1+ and the x64 architecture only.
     <tags>VRM Direct3D glTF</tags>
     <language>ja-JP</language>
     <releaseNotes>
-初版。
+・VRMBlendShapeMasterの割合を、CurrentValue プロパティで外部から指定可能にした。
+・ShaderParameters で、アプリ側で行列を転置する手間をなくした。
     </releaseNotes>
   </metadata>
   <files>
