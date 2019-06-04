@@ -8,7 +8,7 @@ namespace DirectVRM
 {
     public class VRMHumanoidBone : IDisposable
     {
-        public BoneType Bone => this._Native.Bone;
+        public VRMBoneType Bone => this._Native.Bone;
 
         public glTFNode Node { get; protected set; }
 

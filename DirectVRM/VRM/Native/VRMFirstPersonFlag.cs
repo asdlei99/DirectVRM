@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DirectVRM
 {
-    public enum FirstPersonFlag
+    public enum VRMFirstPersonFlag
     {
         Auto, // Create headlessModel
         Both, // Default layer

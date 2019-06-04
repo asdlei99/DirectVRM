@@ -41,8 +41,8 @@ namespace DirectVRM
         /// </summary>
         [JsonConverter( typeof( StringEnumConverter ) )]
         [JsonProperty( "lookAtTypeName" )]
-        [DefaultValue( LookAtType.Bone )]
-        public LookAtType LookAtType { get; set; }
+        [DefaultValue( VRMLookAtType.Bone )]
+        public VRMLookAtType LookAtType { get; set; }
 
         /// <summary>
         ///     Eye controller setting.

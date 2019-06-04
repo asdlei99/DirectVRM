@@ -19,17 +19,17 @@ namespace DirectVRM
 
         public glTFTexture Texture { get; protected set; }
 
-        public AllowedUser AllowedUser => this._Native.AllowedUser;
+        public VRMAllowedUser AllowedUser => this._Native.AllowedUser;
 
-        public UsageLicense ViolentUssage => this._Native.ViolentUssage;
+        public VRMUsageLicense ViolentUssage => this._Native.ViolentUssage;
 
-        public UsageLicense SexualUssage => this._Native.SexualUssage;
+        public VRMUsageLicense SexualUssage => this._Native.SexualUssage;
 
-        public UsageLicense CommercialUssage => this._Native.CommercialUssage;
+        public VRMUsageLicense CommercialUssage => this._Native.CommercialUssage;
 
         public string OtherPermissionUrl => this._Native.OtherPermissionUrl ?? "";
 
-        public LicenseType LicenseType => this._Native.LicenseType;
+        public VRMLicenseType LicenseType => this._Native.LicenseType;
 
         public string OtherLicenseUrl => this._Native.OtherLicenseUrl ?? "";
 

@@ -56,32 +56,32 @@ namespace DirectVRM
         /// </summary>
         [JsonConverter( typeof( StringEnumConverter ) )]
         [JsonProperty( "allowedUserName" )]
-        [DefaultValue( AllowedUser.OnlyAuthor )]
-        public AllowedUser AllowedUser { get; set; }
+        [DefaultValue( VRMAllowedUser.OnlyAuthor )]
+        public VRMAllowedUser AllowedUser { get; set; }
 
         /// <summary>
         ///     Permission to perform violent acts with this avatar
         /// </summary>
         [JsonConverter( typeof( StringEnumConverter ) )]
         [JsonProperty( "violentUssageName" )]
-        [DefaultValue( UsageLicense.Disallow )]
-        public UsageLicense ViolentUssage { get; set; }
+        [DefaultValue( VRMUsageLicense.Disallow )]
+        public VRMUsageLicense ViolentUssage { get; set; }
 
         /// <summary>
         ///     Permission to perform sexual acts with this avatar
         /// </summary>
         [JsonConverter( typeof( StringEnumConverter ) )]
         [JsonProperty( "sexualUssageName" )]
-        [DefaultValue( UsageLicense.Disallow )]
-        public UsageLicense SexualUssage { get; set; }
+        [DefaultValue( VRMUsageLicense.Disallow )]
+        public VRMUsageLicense SexualUssage { get; set; }
 
         /// <summary>
         ///     For commercial use
         /// </summary>
         [JsonRequired()]
         [JsonProperty( "commercialUssageName" )]
-        [DefaultValue( UsageLicense.Disallow )]
-        public UsageLicense CommercialUssage { get; set; }
+        [DefaultValue( VRMUsageLicense.Disallow )]
+        public VRMUsageLicense CommercialUssage { get; set; }
 
         /// <summary>
         ///     If there are any conditions not mentioned above, put the URL link of the license document here.
@@ -95,8 +95,8 @@ namespace DirectVRM
         [JsonConverter( typeof( StringEnumConverter ) )]
         [JsonRequired()]
         [JsonProperty( "licenseName" )]
-        [DefaultValue( LicenseType.Redistribution_Prohibited )]
-        public LicenseType LicenseType { get; set; }
+        [DefaultValue( VRMLicenseType.Redistribution_Prohibited )]
+        public VRMLicenseType LicenseType { get; set; }
 
         /// <summary>
         ///     If “Other” is selected, put the URL link of the license document here.

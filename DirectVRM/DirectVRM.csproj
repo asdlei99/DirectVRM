@@ -129,8 +129,8 @@
     <Compile Include="glTF\glTFMaterialPbrMetallicRoughness.cs" />
     <Compile Include="glTF\glTFScene.cs" />
     <Compile Include="glTF\glTFTextureInfo.cs" />
-    <Compile Include="VRM\Native\AllowedUser.cs" />
-    <Compile Include="VRM\Native\FirstPersonFlag.cs" />
+    <Compile Include="VRM\Native\VRMAllowedUser.cs" />
+    <Compile Include="VRM\Native\VRMFirstPersonFlag.cs" />
     <Compile Include="VRM\Native\glTF_VRM.cs" />
     <Compile Include="VRM\Native\glTF_VRM_BlendShapeBind.cs" />
     <Compile Include="VRM\Native\glTF_VRM_BlendShapeGroup.cs" />
@@ -147,10 +147,10 @@
     <Compile Include="VRM\Native\glTF_VRM_SecondaryAnimationCollider.cs" />
     <Compile Include="VRM\Native\glTF_VRM_SecondaryAnimationColliderGroup.cs" />
     <Compile Include="VRM\Native\glTF_VRM_SecondaryAnimationSpring.cs" />
-    <Compile Include="VRM\Native\LicenseType.cs" />
-    <Compile Include="VRM\Native\LookAtType.cs" />
-    <Compile Include="VRM\Native\UssageLicense.cs" />
-    <Compile Include="VRM\Native\BoneType.cs" />
+    <Compile Include="VRM\Native\VRMLicenseType.cs" />
+    <Compile Include="VRM\Native\VRMLookAtType.cs" />
+    <Compile Include="VRM\Native\VRMUssageLicense.cs" />
+    <Compile Include="VRM\Native\VRMBoneType.cs" />
     <Compile Include="glTF\glTFAccessor.cs" />
     <Compile Include="glTF\glTFBufferView.cs" />
     <Compile Include="glTF\glTFMesh.cs" />

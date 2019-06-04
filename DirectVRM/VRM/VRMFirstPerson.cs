@@ -14,7 +14,7 @@ namespace DirectVRM
 
         public VRMFirstPersonMeshAnnotation[] MeshAnnotations { get; protected set; }
 
-        public LookAtType LookAtType => this._Native.LookAtType;
+        public VRMLookAtType LookAtType => this._Native.LookAtType;
 
         public VRMFirstPersonDegreeMap LookAtHorizontalInner { get; protected set; }
 

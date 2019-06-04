@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DirectVRM
 {
-    public enum LookAtType
+    public enum VRMLookAtType
     {
         None,
         Bone,
