@@ -9,8 +9,15 @@ namespace DirectVRM
 {
     public class Model : IDisposable
     {
+        /// <summary>
+        ///     glTF2.0 パート。
+        /// </summary>
         public glTF glTF { get; protected set; }
 
+        /// <summary>
+        ///     VRM 拡張パート。
+        ///     モデルに VRM 拡張がなければ null 。
+        /// </summary>
         public VRM VRM { get; protected set; }
 
         /// <summary>
