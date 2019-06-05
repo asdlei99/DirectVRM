@@ -219,8 +219,11 @@ namespace DirectVRM
             d3ddc.ComputeShader.SetConstantBuffer( 0, D3DShaderParametersBuffer ); // 不要とは思うが一応。
         }
 
-        public static void AddVertexShader( string name, byte[] shaderBytecode )
+        public static void AddVertexShader( string name, byte[] shaderBytecode, SharpDX.Direct3D11.InputElement[] inputElements = null )
         {
+            inputElements = inputElements ?? VS_INPUT.VertexElements;   // 省略時は VS_INPUT
+
+
             // 同名のシェーダーがあれば解放する。
 
             if( VertexShaders.ContainsKey( name ) )
@@ -235,7 +238,7 @@ namespace DirectVRM
             if( _wrD3DDevice.TryGetTarget( out var d3dDevice ) )
             {
                 var shader = new SharpDX.Direct3D11.VertexShader( d3dDevice, shaderBytecode );
-                var layout = new SharpDX.Direct3D11.InputLayout( d3dDevice, shaderBytecode, VS_INPUT.VertexElements );
+                var layout = new SharpDX.Direct3D11.InputLayout( d3dDevice, shaderBytecode, inputElements );
                 VertexShaders.Add( name, (shader, shaderBytecode, layout) );
             }
         }
