@@ -221,27 +221,20 @@ namespace DirectVRM
 
         // 進行と描画
 
-
-        /// <summary>
-        ///     自分と子ノードを更新する。
-        /// </summary>
-        public void Update()
+        public void Update( double 現在時刻sec )
         {
-            // Transform 関連のプロパティは それぞれ set 時にリアルタイムで更新されるため
+            // glTFNode の Transform 関連のプロパティは それぞれ set 時にリアルタイムで更新されるため
             // ここでは何もすることがない。
         }
 
-        /// <summary>
-        ///     自分と子ノードを描画する。
-        /// </summary>
-        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, VRMMaterialProperty[] vrmMaterials )
+        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters )
         {
             // ノードにメッシュがあれば描画する。
-            this.Mesh?.Draw( d3ddc, ref shaderParameters, this.Skin, vrmMaterials );
+            this.Mesh?.Draw( d3ddc, ref shaderParameters, this.Skin );
 
             // 子ノードがあれば再帰的に描画する。
             foreach( var child in this.Children )
-                child.Draw( d3ddc, ref shaderParameters, vrmMaterials );
+                child.Draw( d3ddc, ref shaderParameters );
         }
 
 

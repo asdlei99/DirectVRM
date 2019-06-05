@@ -22,7 +22,7 @@ namespace DirectVRM
         /// </summary>
         [JsonConverter( typeof( StringEnumConverter ) )]
         [JsonProperty( "bone" )]
-        public BoneType Bone { get; set; }
+        public VRMBoneType Bone { get; set; }
 
         /// <summary>
         ///     Reference node index.

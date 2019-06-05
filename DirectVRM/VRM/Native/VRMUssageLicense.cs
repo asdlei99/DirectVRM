@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace DirectVRM
 {
-    public enum AllowedUser
+    public enum VRMUsageLicense
     {
-        OnlyAuthor,
-        ExplicitlyLicensedPerson,
-        Everyone,
+        Disallow,
+        Allow,
     }
 }

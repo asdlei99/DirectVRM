@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DirectVRM
 {
-    public enum BoneType
+    public enum VRMBoneType
     {
         hips,
         leftUpperLeg,

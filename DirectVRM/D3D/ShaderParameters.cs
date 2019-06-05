@@ -54,6 +54,9 @@ namespace DirectVRM
             };
         }
 
+        /// <summary>
+        ///     HLSL用に、行列が転置されたパラメータを返す。
+        /// </summary>
         public HLSLParameters GetParametersForHLSL()
             => this._parameters;
 
@@ -113,6 +116,9 @@ namespace DirectVRM
         // ローカル
 
 
+        /// <summary>
+        ///     HLSL用に、行列が転置されたパラメータ。
+        /// </summary>
         private HLSLParameters _parameters;
     }
 }

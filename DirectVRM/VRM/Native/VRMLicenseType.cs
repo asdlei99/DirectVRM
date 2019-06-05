@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DirectVRM
 {
-    public enum LicenseType
+    public enum VRMLicenseType
     {
         Redistribution_Prohibited,
         CC0,

@@ -9,7 +9,7 @@ namespace DirectVRM
     {
         public glTFMesh Mesh { get; protected set; }
 
-        public FirstPersonFlag FirstPersonFlag => this._Native.FirstPersonFlag;
+        public VRMFirstPersonFlag FirstPersonFlag => this._Native.FirstPersonFlag;
 
 
 

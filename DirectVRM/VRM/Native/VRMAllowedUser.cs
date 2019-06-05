@@ -5,9 +5,10 @@ using System.Linq;
 
 namespace DirectVRM
 {
-    public enum UsageLicense
+    public enum VRMAllowedUser
     {
-        Disallow,
-        Allow,
+        OnlyAuthor,
+        ExplicitlyLicensedPerson,
+        Everyone,
     }
 }

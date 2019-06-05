@@ -17,6 +17,6 @@ namespace DirectVRM
 
         [JsonConverter( typeof( StringEnumConverter ) )]
         [JsonProperty( "firstPersonFlag" )]
-        public FirstPersonFlag FirstPersonFlag { get; set; }
+        public VRMFirstPersonFlag FirstPersonFlag { get; set; }
     }
 }

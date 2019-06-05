@@ -45,6 +45,47 @@ namespace DirectVRM
 
 
 
+        // D3Dリソース
+
+
+        /// <summary>
+        ///     mesh.primitive.attributes の名前と(リソース、ビュー)のマップ。
+        /// </summary>
+        public Dictionary<string, (SharpDX.Direct3D11.Buffer buffer, SharpDX.Direct3D11.ShaderResourceView srv)> D3DSkinningBufferMap { get; protected set; }
+
+        /// <summary>
+        ///     このプリミティブにインデックスバッファがある場合に有効。
+        ///     ないならnull。
+        /// </summary>
+        public SharpDX.Direct3D11.Buffer D3DVertexIndexBuffer { get; protected set; }
+
+        /// <summary>
+        ///     頂点バッファ（構造化バッファ）。
+        /// </summary>
+        /// <remarks>
+        ///     スキニングの結果が格納される。
+        /// </remarks>
+        public SharpDX.Direct3D11.Buffer D3DVertexBuffer { get; protected set; }
+
+        /// <summary>
+        ///     頂点バッファ（構造化バッファ）への非順序アクセスビュー。
+        /// </summary>
+        /// <remarks>
+        ///     スキニングで、コンピュートシェーダーから頂点バッファへ出力する際に使用される。
+        /// </remarks>
+        public SharpDX.Direct3D11.UnorderedAccessView D3DVertexBufferUAV { get; protected set; }
+
+        /// <summary>
+        ///     VRMを描画する際のラスタライザステートは「裏面描画」とすること。（OpenGLの「反時計回り」仕様のため）
+        /// </summary>
+        public SharpDX.Direct3D11.RasterizerState 裏面描画RasterizerState { get; protected set; }
+
+        public int ElementSizeOfIndexBuffer { get; protected set; }
+
+        public int ElementNumOfIndexBuffer { get; protected set; }
+
+
+
         // 生成と終了
 
 
@@ -128,7 +169,7 @@ namespace DirectVRM
 
             #region " 既定のラスタライザステートを作成する。"
             //----------------
-            this._裏面描画RasterizerState = new SharpDX.Direct3D11.RasterizerState(
+            this.裏面描画RasterizerState = new SharpDX.Direct3D11.RasterizerState(
                 d3dDevice,
                 new SharpDX.Direct3D11.RasterizerStateDescription {
                     CullMode = SharpDX.Direct3D11.CullMode.Front,   // 表面は反時計回り（OpenGL仕様）
@@ -139,37 +180,37 @@ namespace DirectVRM
 
             #region " 頂点データがあれば構造化バッファを作成する。"
             //----------------
-            this._D3DSkinningBufferMap = new Dictionary<string, (SharpDX.Direct3D11.Buffer buffer, SharpDX.Direct3D11.ShaderResourceView srv)>();
+            this.D3DSkinningBufferMap = new Dictionary<string, (SharpDX.Direct3D11.Buffer buffer, SharpDX.Direct3D11.ShaderResourceView srv)>();
 
             string 属性名 = "POSITION";
             if( this._指定した属性のバッファがあれば構造化バッファを作成する( d3dDevice, 属性名, sizeof( float ) * 3, out var d3dBuffer, out var d3dSRV, out int 要素数 ) )
             {
-                this._D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
+                this.D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
                 this.VertexNum = 要素数;
             }
 
             属性名 = "NORMAL";
             if( this._指定した属性のバッファがあれば構造化バッファを作成する( d3dDevice, 属性名, sizeof( float ) * 3, out d3dBuffer, out d3dSRV, out 要素数 ) )
             {
-                this._D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
+                this.D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
             }
 
             属性名 = "TEXCOORD_0";
             if( this._指定した属性のバッファがあれば構造化バッファを作成する( d3dDevice, 属性名, sizeof( float ) * 2, out d3dBuffer, out d3dSRV, out 要素数 ) )
             {
-                this._D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
+                this.D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
             }
 
             属性名 = "WEIGHTS_0";
             if( this._指定した属性のバッファがあれば構造化バッファを作成する( d3dDevice, 属性名, sizeof( float ) * 4, out d3dBuffer, out d3dSRV, out 要素数 ) )
             {
-                this._D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
+                this.D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
             }
 
             属性名 = "JOINTS_0";
             if( this._指定した属性のバッファがあれば構造化バッファを作成する( d3dDevice, 属性名, sizeof( ushort ) * 4, out d3dBuffer, out d3dSRV, out 要素数 ) )
             {
-                this._D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
+                this.D3DSkinningBufferMap[ 属性名 ] = (d3dBuffer, d3dSRV);
             }
             //----------------
             #endregion
@@ -178,7 +219,7 @@ namespace DirectVRM
             //----------------
             if( 0 < this.VertexNum )
             {
-                this._D3DVertexBuffer = new SharpDX.Direct3D11.Buffer(
+                this.D3DVertexBuffer = new SharpDX.Direct3D11.Buffer(
                     d3dDevice,
                     new SharpDX.Direct3D11.BufferDescription {
                         SizeInBytes = VS_INPUT.SizeInBytes * this.VertexNum,
@@ -188,9 +229,9 @@ namespace DirectVRM
                         OptionFlags = SharpDX.Direct3D11.ResourceOptionFlags.BufferAllowRawViews,   // 生ビュー許可
                     } );
 
-                this._D3DVertexBufferUAV = new SharpDX.Direct3D11.UnorderedAccessView(
+                this.D3DVertexBufferUAV = new SharpDX.Direct3D11.UnorderedAccessView(
                     d3dDevice,
-                    this._D3DVertexBuffer,
+                    this.D3DVertexBuffer,
                     new SharpDX.Direct3D11.UnorderedAccessViewDescription {
                         Format = SharpDX.DXGI.Format.R32_Typeless,                          // 4 byte 単位
                         Dimension = SharpDX.Direct3D11.UnorderedAccessViewDimension.Buffer,
@@ -214,7 +255,7 @@ namespace DirectVRM
                     // インデックスバッファを作成
                     accessor.BufferView.DataStream.Position = 0;
 
-                    this._D3DVertexIndexBuffer = new SharpDX.Direct3D11.Buffer(
+                    this.D3DVertexIndexBuffer = new SharpDX.Direct3D11.Buffer(
                         d3dDevice,
                         accessor.BufferView.DataStream, // 初期値としてバッファの内容を格納。glTFなので順序は「反時計回り」に設定されているので注意。
                         new SharpDX.Direct3D11.BufferDescription {
@@ -222,8 +263,8 @@ namespace DirectVRM
                             SizeInBytes = (int)accessor.BufferView.DataStream.Length,
                         } );
 
-                    this._インデックスバッファの要素サイズ = accessor.ComponentTypeSize;
-                    this._インデックスバッファの要素数 = (int)accessor.BufferView.DataStream.Length / this._インデックスバッファの要素サイズ;
+                    this.ElementSizeOfIndexBuffer = accessor.ComponentTypeSize;
+                    this.ElementNumOfIndexBuffer = (int)accessor.BufferView.DataStream.Length / this.ElementSizeOfIndexBuffer;
                 }
             }
             //----------------
@@ -232,28 +273,28 @@ namespace DirectVRM
 
         public virtual void Dispose()
         {
-            this._裏面描画RasterizerState?.Dispose();
-            this._裏面描画RasterizerState = null;
+            this.裏面描画RasterizerState?.Dispose();
+            this.裏面描画RasterizerState = null;
 
             // インデックスバッファを解放する。
-            this._D3DVertexIndexBuffer?.Dispose();
-            this._D3DVertexIndexBuffer = null;
+            this.D3DVertexIndexBuffer?.Dispose();
+            this.D3DVertexIndexBuffer = null;
 
             // 頂点バッファとそのUAVを解放する。
-            this._D3DVertexBufferUAV?.Dispose();
-            this._D3DVertexBufferUAV = null;
-            this._D3DVertexBuffer?.Dispose();
-            this._D3DVertexBuffer = null;
+            this.D3DVertexBufferUAV?.Dispose();
+            this.D3DVertexBufferUAV = null;
+            this.D3DVertexBuffer?.Dispose();
+            this.D3DVertexBuffer = null;
 
             // 頂点データ用構造化バッファを解放する。
-            if( null != this._D3DSkinningBufferMap )
+            if( null != this.D3DSkinningBufferMap )
             {
-                foreach( var kvp in this._D3DSkinningBufferMap )
+                foreach( var kvp in this.D3DSkinningBufferMap )
                 {
                     kvp.Value.buffer?.Dispose();
                     kvp.Value.srv?.Dispose();
                 }
-                this._D3DSkinningBufferMap = null;
+                this.D3DSkinningBufferMap = null;
             }
 
             this.Attributes = null;    // disposeしない
@@ -273,11 +314,11 @@ namespace DirectVRM
             if( this.Attributes.TryGetValue( 属性名, out var accessor ) )
             {
                 // 既にマップにあるなら削除する。
-                if( this._D3DSkinningBufferMap.ContainsKey( 属性名 ) )
+                if( this.D3DSkinningBufferMap.ContainsKey( 属性名 ) )
                 {
-                    this._D3DSkinningBufferMap[ 属性名 ].buffer?.Dispose();
-                    this._D3DSkinningBufferMap[ 属性名 ].srv?.Dispose();
-                    this._D3DSkinningBufferMap.Remove( 属性名 );
+                    this.D3DSkinningBufferMap[ 属性名 ].buffer?.Dispose();
+                    this.D3DSkinningBufferMap[ 属性名 ].srv?.Dispose();
+                    this.D3DSkinningBufferMap.Remove( 属性名 );
                 }
 
                 // バッファビューを取得する。
@@ -328,12 +369,12 @@ namespace DirectVRM
         // 進行と描画
 
 
-        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, glTFSkin skin, float[] weights, Dictionary<string, glTFAccessor>[] targets, VRMMaterialProperty[] vrmMaterials )
+        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters, glTFSkin skin, float[] weights, Dictionary<string, glTFAccessor>[] targets )
         {
             if( 0 == this.VertexNum ||
-                !this._D3DSkinningBufferMap.TryGetValue( "POSITION", out var positionBuffer ) ||
-                !this._D3DSkinningBufferMap.TryGetValue( "NORMAL", out var normalBuffer ) ||
-                !this._D3DSkinningBufferMap.TryGetValue( "TEXCOORD_0", out var texcoord0Buffer ) )
+                !this.D3DSkinningBufferMap.TryGetValue( "POSITION", out var positionBuffer ) ||
+                !this.D3DSkinningBufferMap.TryGetValue( "NORMAL", out var normalBuffer ) ||
+                !this.D3DSkinningBufferMap.TryGetValue( "TEXCOORD_0", out var texcoord0Buffer ) )
             {
                 return; // この3つの属性がないものはサポートしない
             }
@@ -421,8 +462,8 @@ namespace DirectVRM
             #region " スキニングする。"
             //----------------
             if( null != skin &&
-                this._D3DSkinningBufferMap.TryGetValue( "WEIGHTS_0", out var weights0Buffer ) &&
-                this._D3DSkinningBufferMap.TryGetValue( "JOINTS_0", out var joints0Buffer ) )
+                this.D3DSkinningBufferMap.TryGetValue( "WEIGHTS_0", out var weights0Buffer ) &&
+                this.D3DSkinningBufferMap.TryGetValue( "JOINTS_0", out var joints0Buffer ) )
             {
                 bool コンピュートシェーダーを使う = true;
 
@@ -463,7 +504,7 @@ namespace DirectVRM
                         d3ddc.ComputeShader.SetShaderResources( 0, srvs );
 
                         // コンピュートシェーダーの出力（頂点バッファ）を設定する。
-                        d3ddc.ComputeShader.SetUnorderedAccessView( 0, this._D3DVertexBufferUAV );
+                        d3ddc.ComputeShader.SetUnorderedAccessView( 0, this.D3DVertexBufferUAV );
 
                         // コンピュートシェーダーを実行してスキニングを行い、結果を頂点バッファに格納する。
                         d3ddc.Dispatch( ( this.VertexNum / 256 ) + 1, 1, 1 ); // 既定のシェーダー（StandardSkinningCS.hlsl）に合わせてある
@@ -551,7 +592,7 @@ namespace DirectVRM
                             スキニング後の入力頂点リスト[ i ].Texcoord0 = texcoord0;
                         }
 
-                        d3ddc.UpdateSubresource( スキニング後の入力頂点リスト, this._D3DVertexBuffer );
+                        d3ddc.UpdateSubresource( スキニング後の入力頂点リスト, this.D3DVertexBuffer );
                     }
                     //----------------
                     #endregion
@@ -570,7 +611,7 @@ namespace DirectVRM
 
             #region " ラスタライザステートを設定する。"
             //----------------
-            d3ddc.Rasterizer.State = this._裏面描画RasterizerState;
+            d3ddc.Rasterizer.State = this.裏面描画RasterizerState;
             //----------------
             #endregion
 
@@ -579,16 +620,16 @@ namespace DirectVRM
 
             // 頂点バッファ
 
-            d3ddc.InputAssembler.SetVertexBuffers( 0, new SharpDX.Direct3D11.VertexBufferBinding( this._D3DVertexBuffer, VS_INPUT.SizeInBytes, 0 ) );
+            d3ddc.InputAssembler.SetVertexBuffers( 0, new SharpDX.Direct3D11.VertexBufferBinding( this.D3DVertexBuffer, VS_INPUT.SizeInBytes, 0 ) );
 
             // インデックスバッファ（ある場合）
 
-            if( null != this._D3DVertexIndexBuffer )
+            if( null != this.D3DVertexIndexBuffer )
             {
                 // インデックスバッファの ComponentType から DXGIフォーマットを決める
                 var format = SharpDX.DXGI.Format.R32_UInt;
 
-                switch( this._インデックスバッファの要素サイズ )
+                switch( this.ElementSizeOfIndexBuffer )
                 {
                     case 1: format = SharpDX.DXGI.Format.R8_UInt; break;
                     case 2: format = SharpDX.DXGI.Format.R16_UInt; break;
@@ -596,12 +637,12 @@ namespace DirectVRM
                 }
 
                 // アクセサが示すバッファビューを丸ごとセット
-                d3ddc.InputAssembler.SetIndexBuffer( this._D3DVertexIndexBuffer, format, 0 );
+                d3ddc.InputAssembler.SetIndexBuffer( this.D3DVertexIndexBuffer, format, 0 );
             }
 
             // トポロジ
 
-            if( _TopoMap.TryGetValue( this.Mode, out var d3dTopology ) )
+            if( TopologyMap.TryGetValue( this.Mode, out var d3dTopology ) )
             {
                 d3ddc.InputAssembler.PrimitiveTopology = d3dTopology;
             }
@@ -619,35 +660,22 @@ namespace DirectVRM
             {
                 int materialIndex = this.MaterialIndex.Value;
 
-                if( 0 <= materialIndex && materialIndex < vrmMaterials.Length )
+                if( null != this.Material )
                 {
-                    // (A) VRMマテリアルを使う場合
-
-                    var vrmMaterial = vrmMaterials[ materialIndex ];
-                    bool useTesselator = ( d3dTopology == SharpDX.Direct3D.PrimitiveTopology.PatchListWith3ControlPoints );
-
-                    if( !this._VRMマテリアルを設定する( d3ddc, vrmMaterial, vrmMaterial.Shader, useTesselator ) )
-                    {
-                        // 失敗したら Standard マテリアルを使う。
-                        this._VRMマテリアルを設定する( d3ddc, vrmMaterial, "Standard", useTesselator );
-                    }
-                }
-                else if( null != this.Material )
-                {
-                    // (B) glTFマテリアルを使う場合
+                    // (A) glTFマテリアルを使う場合
 
                     this._glTFマテリアルを設定する( d3ddc, this.Material );
                 }
                 else
                 {
-                    // (C) マテリアルの指定が無効である場合
+                    // (B) マテリアルの指定が無効である場合
 
                     this._既定のマテリアルを設定する( d3ddc );
                 }
             }
             else
             {
-                // (D) マテリアルの指定がない場合
+                // (C) マテリアルの指定がない場合
 
                 this._既定のマテリアルを設定する( d3ddc );
             }
@@ -656,13 +684,13 @@ namespace DirectVRM
 
             #region " Draw/DrawIndexed する。"
             //----------------
-            if( null != this._D3DVertexIndexBuffer )
+            if( null != this.D3DVertexIndexBuffer )
             {
-                int elementSize = this._インデックスバッファの要素サイズ;
+                int elementSize = this.ElementSizeOfIndexBuffer;
                 if( null != this.Indices && this.Indices.BufferView.ByteStride.HasValue )
                     elementSize = this.Indices.BufferView.ByteStride.Value;    // ByteStride が null じゃないならそれを使う
 
-                d3ddc.DrawIndexed( this._インデックスバッファの要素数, this.Indices.ByteOffset / elementSize, 0 );
+                d3ddc.DrawIndexed( this.ElementNumOfIndexBuffer, this.Indices.ByteOffset / elementSize, 0 );
             }
             else
             {
@@ -778,53 +806,13 @@ namespace DirectVRM
 
 
 
-        // D3Dリソース
-
-
-        /// <summary>
-        ///     mesh.primitive.attributes の名前と(リソース、ビュー)のマップ。
-        /// </summary>
-        private Dictionary<string, (SharpDX.Direct3D11.Buffer buffer, SharpDX.Direct3D11.ShaderResourceView srv)> _D3DSkinningBufferMap = null;
-
-        /// <summary>
-        ///     このプリミティブにインデックスバッファがある場合に有効。
-        ///     ないならnull。
-        /// </summary>
-        private SharpDX.Direct3D11.Buffer _D3DVertexIndexBuffer = null;
-
-        /// <summary>
-        ///     頂点バッファ（構造化バッファ）。
-        /// </summary>
-        /// <remarks>
-        ///     スキニングの結果が格納される。
-        /// </remarks>
-        private SharpDX.Direct3D11.Buffer _D3DVertexBuffer = null;
-
-        /// <summary>
-        ///     頂点バッファ（構造化バッファ）への非順序アクセスビュー。
-        /// </summary>
-        /// <remarks>
-        ///     スキニングで、コンピュートシェーダーから頂点バッファへ出力する際に使用される。
-        /// </remarks>
-        private SharpDX.Direct3D11.UnorderedAccessView _D3DVertexBufferUAV = null;
-
-        /// <summary>
-        ///     VRMを描画する際のラスタライザステートは「裏面描画」とすること。（OpenGLの「反時計回り」仕様のため）
-        /// </summary>
-        private SharpDX.Direct3D11.RasterizerState _裏面描画RasterizerState = null;
-
-
         // ローカル
 
 
         private glTFLoader.Schema.MeshPrimitive _Native;
 
-        private int _インデックスバッファの要素サイズ = 0;
-
-        private int _インデックスバッファの要素数 = 0;
-
         // トポロジの変換表 GL to D3D11
-        private static readonly Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> _TopoMap = new Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> {
+        internal static readonly Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> TopologyMap = new Dictionary<glTFLoader.Schema.MeshPrimitive.ModeEnum, SharpDX.Direct3D.PrimitiveTopology> {
             { glTFLoader.Schema.MeshPrimitive.ModeEnum.POINTS,          SharpDX.Direct3D.PrimitiveTopology.PointList },
             { glTFLoader.Schema.MeshPrimitive.ModeEnum.LINES,           SharpDX.Direct3D.PrimitiveTopology.LineList },
             //{ glTFLoader.Schema.MeshPrimitive.ModeEnum.LINE_LOOP,      SharpDX.Direct3D.PrimitiveTopology.LineList },     // Direct3D11 には LINE_LOOP は存在しない。

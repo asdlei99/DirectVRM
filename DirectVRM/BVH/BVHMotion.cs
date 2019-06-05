@@ -9,7 +9,7 @@ namespace DirectVRM
 {
     public class BVHMotion
     {
-        public BVHMotion( string bvhFilePath, VRMScene scene )
+        public BVHMotion( string bvhFilePath, Model model )
         {
             var text = File.ReadAllText( bvhFilePath );
             this._bvhFormat = new BVHForat( text );
@@ -18,18 +18,18 @@ namespace DirectVRM
             foreach( var node in this._bvhFormat.Root.Traverse() )
                 this._DataNumPerFrame += node.Channels.Length;
 
-            var hips = scene.glTF.Nodes.Where( ( n ) => n.Name == "Hips" ).FirstOrDefault();
+            var hips = model.glTF.Nodes.Where( ( n ) => n.Name == "Hips" ).FirstOrDefault();
             if( null != hips )
                 this._InitialLocalPositionRH = hips.LocalPositionRH;
         }
 
         private Vector3 _InitialLocalPositionRH;
 
-        public void GetFrameAndApply( float time, VRMScene scene )
+        public void GetFrameAndApply( float time, Model model )
         {
             this._GetFrame( time, ( bnode, pos, rot ) => {
 
-                foreach( var gnode in scene.glTF.Nodes )
+                foreach( var gnode in model.glTF.Nodes )
                 {
                     if( gnode.Name.ToLower() == bnode.Name.ToLower() )
                     {

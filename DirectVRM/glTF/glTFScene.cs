@@ -50,6 +50,25 @@ namespace DirectVRM
 
 
 
+        // 進行と描画
+
+
+        public void Update( double 現在時刻sec )
+        {
+            // 各ルートノードから順番に進行する。
+            foreach( var rootNode in this.Nodes )
+                rootNode.Update( 現在時刻sec );
+        }
+
+        public void Draw( SharpDX.Direct3D11.DeviceContext d3ddc, ref ShaderParameters shaderParameters )
+        {
+            // 各ルートノードから順番に描画する。
+            foreach( var rootNode in this.Nodes )
+                rootNode.Draw( d3ddc, ref shaderParameters );
+        }
+
+
+
         // ローカル
 
 
