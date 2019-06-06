@@ -18,7 +18,7 @@ namespace DirectVRM
 
         public int ByteLength => this._Native.ByteLength;
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -35,6 +35,9 @@ namespace DirectVRM
             this._Native = native;
 
             this.Buffer = null;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( byte[] buffer )

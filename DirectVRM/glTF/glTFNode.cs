@@ -40,7 +40,7 @@ namespace DirectVRM
         /// </summary>
         public glTFNode Parent { get; protected set; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -134,6 +134,9 @@ namespace DirectVRM
         {
             this._Native = native;
             this.ObjectIndex = objectIndex;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
 
             // 先に TRS をチェック
             this.LocalPositionRH = ( null != this._Native.Translation ) ? new Vector3( this._Native.Translation ) : Vector3.Zero;       // 右手系

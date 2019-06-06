@@ -15,7 +15,7 @@ namespace DirectVRM
 
         public glTFBufferView BufferView { get; protected set; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -32,6 +32,9 @@ namespace DirectVRM
             this.ObjectIndex = objectIndex;
 
             this.BufferView = null;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

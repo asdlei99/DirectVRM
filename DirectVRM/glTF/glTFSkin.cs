@@ -22,7 +22,7 @@ namespace DirectVRM
         /// </summary>
         public glTFNode[] Joints { get; protected set; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -53,6 +53,9 @@ namespace DirectVRM
 
             // Joints
             this.Joints = new glTFNode[ this._Native.Joints?.Length ?? 0 ]; // 未定義時は空配列（not null）
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
 
             // 以下 late binding
             this.InverseBindMatricesRH = null;

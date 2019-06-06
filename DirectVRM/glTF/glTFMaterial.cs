@@ -25,7 +25,7 @@ namespace DirectVRM
 
         public float AlphaCutoff => this._Native.AlphaCutoff;
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -60,6 +60,9 @@ namespace DirectVRM
             this.EmissiveTexture = ( null != this._Native.EmissiveTexture ) ?
                 new glTFTextureInfo( this._Native.EmissiveTexture ) :
                 null;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

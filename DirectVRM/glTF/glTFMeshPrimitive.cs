@@ -39,7 +39,7 @@ namespace DirectVRM
         /// </summary>
         public int VertexNum { get; protected set; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -115,6 +115,9 @@ namespace DirectVRM
             }
             //----------------
             #endregion        }
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf, SharpDX.Direct3D11.Device d3dDevice )

@@ -15,7 +15,7 @@ namespace DirectVRM
 
         public glTFLoader.Schema.Camera.TypeEnum Type => this._Native.Type;
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -40,6 +40,9 @@ namespace DirectVRM
             this.Perspective = ( null != this._Native.Perspective ) ?
                 new glTFCameraPerspective( this._Native.Perspective ) :
                 null;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

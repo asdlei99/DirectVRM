@@ -55,7 +55,7 @@ namespace DirectVRM
         /// </summary>
         public glTFAccessorSparse Sparse { get; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -78,6 +78,9 @@ namespace DirectVRM
             this.Sparse = ( null != this._Native.Sparse ) ?
                 new glTFAccessorSparse( this._Native.Sparse ) :
                 null;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

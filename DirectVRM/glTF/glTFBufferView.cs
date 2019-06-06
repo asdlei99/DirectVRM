@@ -23,7 +23,7 @@ namespace DirectVRM
 
         public glTFLoader.Schema.BufferView.TargetEnum? Target => this._Native.Target;
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -41,6 +41,9 @@ namespace DirectVRM
 
             this.Buffer = null;
             this.DataStream = null;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

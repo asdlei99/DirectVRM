@@ -11,7 +11,7 @@ namespace DirectVRM
 
         public glTFLoader.Schema.AnimationChannelTarget.PathEnum Path => this._Native.Path;
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -24,6 +24,9 @@ namespace DirectVRM
         {
             this._Native = native;
             this.Node = null;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

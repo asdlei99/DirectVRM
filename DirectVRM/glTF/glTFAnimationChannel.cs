@@ -11,7 +11,7 @@ namespace DirectVRM
 
         public glTFAnimationChannelTarget Target { get; protected set; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -25,7 +25,12 @@ namespace DirectVRM
             this._Native = native;
 
             this.Sampler = null;
+
+            // Target
             this.Target = new glTFAnimationChannelTarget( this._Native.Target );
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf, glTFAnimation animation )

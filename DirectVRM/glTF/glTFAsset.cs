@@ -15,7 +15,7 @@ namespace DirectVRM
 
         public string MinVersion => this._Native.MinVersion ?? "";
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -27,6 +27,9 @@ namespace DirectVRM
         public glTFAsset( glTFLoader.Schema.Asset native )
         {
             this._Native = native;
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

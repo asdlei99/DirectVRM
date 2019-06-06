@@ -14,7 +14,7 @@ namespace DirectVRM
         /// </summary>
         public glTFNode[] Nodes { get; protected set; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -34,6 +34,9 @@ namespace DirectVRM
             this.Nodes = ( null != this._Native.Nodes ) ?
                 new glTFNode[ this._Native.Nodes.Length ] :
                 new glTFNode[ 0 ]; // 未定義時は空配列（not null）
+
+            // Extensions
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
         }
 
         public void LateBinding( glTF gltf )

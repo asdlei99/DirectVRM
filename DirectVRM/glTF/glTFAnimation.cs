@@ -13,7 +13,7 @@ namespace DirectVRM
 
         public glTFAnimationSampler[] Samplers { get; protected set; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -62,6 +62,12 @@ namespace DirectVRM
             {
                 this.Samplers = new glTFAnimationSampler[ 0 ];  // 未定義時は空配列（not null）
             }
+            //----------------
+            #endregion
+
+            #region " Extensions "
+            //----------------
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
             //----------------
             #endregion
         }

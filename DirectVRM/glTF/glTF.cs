@@ -89,7 +89,10 @@ namespace DirectVRM
         /// </summary>
         public glTFSkin[] Skins { get; }
 
-        public Dictionary<string, object> Extensions => this._Native.Extensions ?? new Dictionary<string, object>();
+        /// <summary>
+        ///     未定義時は空辞書（not null）。
+        /// </summary>
+        public Dictionary<string, object> Extensions { get; }
 
         public glTFLoader.Schema.Extras Extras => this._Native.Extras;
 
@@ -339,6 +342,12 @@ namespace DirectVRM
             {
                 this.Skins = new glTFSkin[ 0 ]; // 未定義時は空配列（not null）
             }
+            //----------------
+            #endregion
+
+            #region " Extensions "
+            //----------------
+            this.Extensions = this._Native.Extensions ?? new Dictionary<string, object>();
             //----------------
             #endregion
         }
