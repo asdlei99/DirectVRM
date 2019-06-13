@@ -34,7 +34,7 @@ namespace DirectVRM
         /// <summary>
         ///     Unity's HumanLimit.useDefaultValues
         /// </summary>
-        [JsonProperty( "useDefaultValues" )]
+        [JsonProperty( "useDefaultValues", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         [DefaultValue( true )]
         public bool UseDefaultValues { get; set; }
 
@@ -44,7 +44,7 @@ namespace DirectVRM
         /// <remarks>
         ///     Disabled if <see cref="UseDefaultValues"/> is true.
         /// </remarks>
-        [JsonProperty( "min" )]
+        [JsonProperty( "min", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Vector3? Min { get; set; }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace DirectVRM
         /// <remarks>
         ///     Disabled if <see cref="UseDefaultValues"/> is true.
         /// </remarks>
-        [JsonProperty( "max" )]
+        [JsonProperty( "max", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Vector3? Max { get; set; }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace DirectVRM
         /// <remarks>
         ///     Disabled if <see cref="UseDefaultValues"/> is true.
         /// </remarks>
-        [JsonProperty( "center" )]
+        [JsonProperty( "center", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Vector3? Center { get; set; }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace DirectVRM
         /// <remarks>
         ///     Disabled if <see cref="UseDefaultValues"/> is true.
         /// </remarks>
-        [JsonProperty( "axisLength" )]
+        [JsonProperty( "axisLength", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public float? AxisLength { get; set; }
     }
 }

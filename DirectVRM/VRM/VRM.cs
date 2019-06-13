@@ -4,23 +4,31 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using SharpDX;
+using Newtonsoft.Json;
 
 namespace DirectVRM
 {
     public class VRM : IDisposable
     {
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public VRMMeta Meta { get; }
 
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public VRMMaterialProperty[] MaterialProperties { get; }
 
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate) ]
         public VRMSecondaryAnimation SecondaryAnimation { get; protected set; }
 
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public VRMBlendShapeMaster BlendShapeMaster { get; protected set; }
 
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public VRMFirstPerson FirstPerson { get; protected set; }
 
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public VRMHumanoid Humanoid { get; protected set; }
 
+        [JsonProperty( DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public VRMScene Scene { get; protected set; }
 
 
@@ -169,7 +177,7 @@ namespace DirectVRM
             this.Scene.Update( 現在時刻sec );
 
             // SecondaryAnimation（揺れボーン等）を適用する。
-            this.SecondaryAnimation.Update( 現在時刻sec );
+            this.SecondaryAnimation?.Update( 現在時刻sec );
         }
 
 

@@ -24,19 +24,19 @@ namespace DirectVRM
         [DefaultValue( -1 )]
         public int RenderQueue { get; set; }
 
-        [JsonProperty( "floatProperties" )]
+        [JsonProperty( "floatProperties", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Dictionary<string, float> FloatProperties { get; set; }
 
-        [JsonProperty( "vectorProperties" )]
+        [JsonProperty( "vectorProperties", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Dictionary<string, float[]> VectorProperties { get; set; }
 
-        [JsonProperty( "textureProperties" )]
+        [JsonProperty( "textureProperties", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Dictionary<string, int> TextureProperties { get; set; }
 
-        [JsonProperty( "keywordMap" )]
+        [JsonProperty( "keywordMap", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Dictionary<string, bool> KeywordMap { get; set; }
 
-        [JsonProperty( "tagMap" )]
+        [JsonProperty( "tagMap", DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate )]
         public Dictionary<string, string> TagMap { get; set; }
     }
 }
