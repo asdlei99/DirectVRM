@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>DirectVRM</id>
-    <version>1.0.0-alpha09</version>
+    <version>1.0.0-alpha10</version>
     <authors>FROM/Kenji Yamazaki</authors>
     <owners>FROM</owners>
     <license type="expression">MIT</license>

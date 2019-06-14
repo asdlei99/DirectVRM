@@ -201,7 +201,8 @@ namespace DirectVRM
             // Parent
             foreach( var node in gltf.Nodes )
             {
-                if( node.Children.Contains( this ) )
+                if( node._Native.Children != null &&
+                    node._Native.Children.Contains( this.ObjectIndex ) )
                 {
                     this.Parent = node;
                     break;
